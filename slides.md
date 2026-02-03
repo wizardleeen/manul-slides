@@ -150,9 +150,9 @@ graph LR
 
     %% 2. Optimized Styling
     %% Increased font-size here so you don't need 'scale-200'
-    classDef main fill:#3b82f6,stroke:#2563eb,stroke-width:4px,color:#fff,font-weight:bold,font-size:24px
-    classDef user fill:#10b981,stroke:#059669,stroke-width:2px,color:#fff,font-size:18px,font-weight:bold
-    classDef infra fill:#f3f4f6,stroke:#d1d5db,stroke-width:2px,color:#374151,font-size:16px
+    classDef main fill:#3498db,stroke:#2563eb,stroke-width:4px,color:#fff,font-weight:bold,font-size:24px
+    classDef user fill:#f9f9f9,stroke:#059669,stroke-width:2px,color:#333,font-size:18px
+    classDef infra fill:#fff3e0,stroke:#d1d5db,stroke-width:2px,color:#333,font-size:16px
 
     %% Assign Classes
     class manul main
@@ -231,22 +231,22 @@ graph LR
         Op("stock -= amount")
     end
 
-    subgraph Runtime [Manul]
+    subgraph Manul [Manul]
         direction TB
         Context(Context)
     end
 
-    subgraph Infra [Database]
-        DB[(Persistent Storage)]
+    subgraph Infra [Cloud]
+        DB[(Database)]
     end
 
     %% Define Edges
     Op --> Context
-    Context ==> DB
+    Context --> DB
 
     %% Styling
     style App fill:#f9f9f9,stroke:#333,color:#333
-    style Runtime fill:#e3f2fd,stroke:#2196f3,stroke-dasharray: 5 5,color:#333
+    style Manul fill:#3498db,stroke:#2196f3,stroke-dasharray: 5 5,color:#fff
     style DB fill:#fff3e0,stroke:#e65100,color:#333
     
     %% Explicitly style internal nodes to ensure visibility if they inherit default white text in dark mode
@@ -295,14 +295,14 @@ fn transfer(from: Account, to: Account, amount: Money) {
 ```mermaid
 graph TD
     %% The Orchestrator Node (Top)
-    Runner["<b>Node 1: Workflow</b><br/>transfer(from, to)"]:::app
+    Runner["<b>Workflow</b><br/>transfer(from, to)"]:::app
 
-    %% The Manul Runtime (Center Hub)
-    Manul{{"<b>Manul Cloud</b><br/>Workflow Engine"}}:::magic
+    %% The Manul (Center Hub)
+    Manul{{"<b>Manul</b><br/>Workflow Engine"}}:::magic
 
     %% The Data Nodes (Bottom, Side-by-Side)
-    NodeA("<b>Node 2</b><br/>Object: from"):::db
-    NodeB("<b>Node 3</b><br/>Object: to"):::db
+    NodeA("<b>Node 1</b><br/>Object: from"):::db
+    NodeB("<b>Node 2</b><br/>Object: to"):::db
 
     %% Connections
     Runner --> Manul
@@ -353,7 +353,7 @@ graph TD
     %% Nodes
     User["<b>User Function</b><br/>review(Resume)"]:::app
     
-    Manul{{"<b>Manul Runtime</b><br/>Auto-Serialization<br/>& Schema Injection"}}:::magic
+    Manul{{"<b>Manul</b><br/>Schema Injection<br/>& Result Parsing"}}:::magic
     
     Model("<b>AI Model</b><br/>LLM Inference"):::infra
 
