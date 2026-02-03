@@ -2,7 +2,7 @@
 theme: seriph
 layout: center
 title: Manul Cloud
-titleTemplate: '%s - Slides'
+titleTemplate: '%s'
 class: text-center bg-white dark:bg-[#0B0F19] text-black dark:text-white
 favicon: /logo.svg
 # transition: slide-left
