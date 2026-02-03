@@ -55,31 +55,62 @@ favicon: /logo.svg
              <div class="i-material-symbols-database text-4xl"/>
              <h4 class="text-xl font-bold m-0">Data/Code Gap</h4>
           </div>
-          <p class="text-sm opacity-90 leading-relaxed">
-              Bridging objects and database requires massive boilerplate.
-              Managing schema changes is tedious, complex and risky.
-          </p>
-      </div>
+          <div class="text-sm opacity-90 leading-relaxed">
+              Bridging objects and storage requires massive boilerplate, 
+              regardless of the database of choice.
+          </div>
+
+```ts
+// 😫 The data access ritual
+let item = await db.find(id)
+
+item.stock -= amt
+
+await db.save(item)
+```
+   
+</div>
       <!-- Card 2 -->
       <div class="bg-gray-50 dark:bg-white/5 rounded-xl p-6 border border-gray-200 dark:border-gray-700 flex flex-col gap-4">
           <div class="flex items-center gap-3">
              <div class="i-arcticons-meshenger text-4xl"/>
              <h4 class="text-xl font-bold m-0">Distributed Trap</h4>
           </div>
-          <p class="text-sm opacity-90 leading-relaxed">
+          <div class="text-sm opacity-90 leading-relaxed">
               Network calls are unreliable. Handling failures, retries, and distributed consistency turns simple logic into spaghetti code.
-          </p>
-      </div>
+          </div>
+
+```ts
+await payment.charge()
+try {
+  await logistics.ship()
+} catch (err) {
+  // ❌ What if refund fails?
+  await payment.refund()
+}
+```
+  </div>
       <!-- Card 3 -->
       <div class="bg-gray-50 dark:bg-white/5 rounded-xl p-6 border border-gray-200 dark:border-gray-700 flex flex-col gap-4">
           <div class="flex items-center gap-3">
              <div class="i-streamline-artificial-intelligence-spark-solid text-4xl"/>
              <h4 class="text-xl font-bold m-0">AI Friction</h4>
           </div>
-          <p class="text-sm opacity-90 leading-relaxed">
+          <div class="text-sm opacity-90 leading-relaxed">
               AI is essential, yet integrating LLMs often means wrestling with unstructured text, prompts, and fragile parsers.
-          </p>    
-      </div>
+          </div> 
+
+```ts
+let res = 
+    await llm.ask(prompt)
+
+// LLM returns: 
+// "Here is the JSON: {...}"
+// ❌ JSON.parse crashes
+let data = JSON.parse(res)
+```                 
+
+</div>
   </div>
 
 </div>
@@ -134,6 +165,27 @@ graph LR
 ```
 
 </div>
+
+<!--
+
+The argument for a new language:
+
+#### 1. The "Semantics vs. Syntax" Argument
+> "Libraries allow you to write code *faster*, but they don't change *how* the code executes. Even the best Python library still runs on a runtime designed for a single machine with volatile RAM.
+>
+> To make the cloud behave like a single computer, we need **Durable Execution**. If a server crashes in the middle of a function, a library throws an exception. Manul, however, pauses the function and resumes it on another server. You cannot achieve that level of transparent fault-tolerance without controlling the runtime and the compiler."
+
+#### 2. The "SQL" Analogy
+> "Why do we use SQL? Why don't we just use Java libraries to iterate over bytes on a hard drive?
+>
+> We use SQL because it allows the database engine to optimize the query execution plan. Manul does the same thing for application logic. By owning the language, the Manul compiler can analyze your code and say, 'This object is accessed frequently, let's cache it,' or 'These two functions talk a lot, let's deploy them on the same physical node.' A library cannot perform those infrastructure-level optimizations."
+
+#### 3. The "AI" Argument
+> "Integrating LLMs into code is currently fragile. We are treating English prompts like string concatenation.
+>
+> Manul treats AI as a native function call. Because we control the language parser, we can enforce type safety on the *output* of an LLM. If the AI hallucinates a response that doesn't match your Manul type definition, the runtime catches it before it corrupts your application state. That requires deep integration that a library simply cannot provide."
+
+-->
 
 
 ---
