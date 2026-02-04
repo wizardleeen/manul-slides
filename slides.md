@@ -1,7 +1,7 @@
 ---
 theme: seriph
 layout: center
-title: Manul Cloud
+title: Manul Language
 titleTemplate: '%s'
 class: text-center bg-white dark:bg-[#0B0F19] text-black dark:text-white
 favicon: /logo.svg
@@ -23,14 +23,14 @@ favicon: /logo.svg
 
   <!-- Main Title -->
   <h1 class="text-8xl font-black text-slate-900 dark:text-white mb-6 font-serif tracking-tight">
-    Manul Cloud
+    Manul
   </h1>
 
   <!-- Subtitle with divider -->
   <div class="w-24 h-1 bg-gray-200 dark:bg-gray-700 rounded-full mb-8"></div>
 
   <p class="text-2xl text-slate-500 dark:text-slate-400 font-light">
-    The cloud that looks like a 
+    The language that turns the cloud into a 
     <span class="font-medium text-slate-800 dark:text-slate-100">giant computer</span>
   </p>
 
@@ -121,16 +121,68 @@ let data = JSON.parse(res)
 
 <div class="flex flex-col items-center justify-center h-[400px]">
 
-<div class="text-xl text-opacity-80 mb-12">
-  A programming language that turns the cloud into a giant computer.
+<div class="text-lg text-opacity-80 mb-12 text-center leading-tight">
+  Inspired by how operating system simplifies application development by managing the hardware. <br/>
+  <br/>
+  We are building a cloud runtime that manages infrastructural services.
 </div>
+
+<div class="flex gap-16">
+    <div> 
+
+<div class="text-center mb-4">Operating System</div>
 
 ```mermaid
 graph LR
     %% 1. Orientation changed to LR (Left to Right) to fit 16:9 slides
     
     app[Application]
-    manul(((Manul)))
+    manul((("Operating<br/>System")))
+
+    %% Grouping the infrastructure makes the diagram cleaner
+    subgraph Cloud [The Hardware]
+        direction TB
+        db[CPU]
+        search[RAM]
+        ai[Storage Device]
+        rpc[IO Devices]
+    end
+
+    %% Connections
+    app ==> manul
+    manul -.-> db
+    manul -.-> search
+    manul -.-> ai
+    manul -.-> rpc
+
+    %% 2. Optimized Styling
+    %% Increased font-size here so you don't need 'scale-200'
+    %% 
+    classDef main fill:#14b8a6,stroke:#0d9488,stroke-width:4px,color:#fff,font-weight:bold,font-size:24px
+    classDef user fill:#f9f9f9,stroke:#333,stroke-width:2px,color:#333,font-size:18px
+    classDef infra fill:#fff3e0,stroke:#d1d5db,stroke-width:2px,color:#333,font-size:16px
+
+    %% Assign Classes
+    class manul main
+    class app user
+    class db,search,ai,rpc infra
+
+    %% Link Styling
+    linkStyle 0 stroke:#3b82f6,stroke-width:4px
+    linkStyle default stroke:#9ca3af,stroke-width:2px,stroke-dasharray: 5 5
+```
+</div>
+
+<div>
+
+<div class="text-center mb-4">Manul</div>
+
+```mermaid
+graph LR
+    %% 1. Orientation changed to LR (Left to Right) to fit 16:9 slides
+    
+    app[Application]
+    manul((("&nbsp;&nbsp;&nbsp;Manul&nbsp;&nbsp;&nbsp;")))
 
     %% Grouping the infrastructure makes the diagram cleaner
     subgraph Cloud [The Cloud]
@@ -151,7 +203,7 @@ graph LR
     %% 2. Optimized Styling
     %% Increased font-size here so you don't need 'scale-200'
     classDef main fill:#3498db,stroke:#2563eb,stroke-width:4px,color:#fff,font-weight:bold,font-size:24px
-    classDef user fill:#f9f9f9,stroke:#059669,stroke-width:2px,color:#333,font-size:18px
+    classDef user fill:#f9f9f9,stroke:#333,stroke-width:2px,color:#333,font-size:18px
     classDef infra fill:#fff3e0,stroke:#d1d5db,stroke-width:2px,color:#333,font-size:16px
 
     %% Assign Classes
@@ -164,6 +216,9 @@ graph LR
     linkStyle default stroke:#9ca3af,stroke-width:2px,stroke-dasharray: 5 5
 ```
 
+</div>
+
+</div>
 </div>
 
 <!--
@@ -190,39 +245,59 @@ The argument for a new language:
 
 ---
 level: 2
+layout: default
 ---
 
 # Database as Memory
 
-<div class="flex flex-row gap-8 mb-8">
 
-<div>
 
-Manul applications access data as if it resides in memory. 
+<div class="grid grid-cols-[1fr_1fr] gap-12 mt-4">
+
+<!-- Left Column: Concepts -->
+<div class="flex flex-col justify-center">
+
+Manul applications access data as if it resides in memory:
+
 - No data access boilerplate
 - Strong local consistency
 - Effortless schema evolution
 
 </div>
 
-<div class="flex items-center">
-
-```manul
-fn reduceStock(amount: int) {
-    require(stock >= amount, "Insufficient stock")
-    stock -= amount
-}
+<!-- Right Column: Code Comparison -->
+<div class="relative">
+  <!-- Traditional Approach -->
+  <div class="transition duration-300">
+    <div class="text-xs font-mono mb-1">Traditional Data Access</div>
+    
+```ts
+let product = await db.find(id)
+product.stock -= amount
+await db.save(product)
 ```
+  </div>
+
+  <!-- Arrow Icon -->
+  <div class="flex justify-center my-2">
+    <carbon-arrow-down class="text-2xl text-gray-400" />
+  </div>
+
+  <!-- Manul Approach -->
+  <div class="border border-green-500/50 rounded-lg overflow-hidden shadow-lg shadow-green-500/10">
+    <div class="bg-green-500/10 px-2 py-1 text-xs font-mono text-green-500">Manul</div>
+    
+```manul
+product.stock -= amount
+```
+  </div>
+</div>
 
 </div>
 
-<div>
-
-
-</div>
-</div>
-
-<div>
+<!-- Bottom Section: Diagram -->
+<div class="mt-8 flex justify-center">
+  <div class="w-full max-w-3xl scale-90 origin-top">
 
 ```mermaid
 graph LR
@@ -246,15 +321,19 @@ graph LR
 
     %% Styling
     style App fill:#f9f9f9,stroke:#333,color:#333
-    style Manul fill:#3498db,stroke:#2196f3,stroke-dasharray: 5 5,color:#fff
-    style DB fill:#fff3e0,stroke:#e65100,color:#333
+    style Manul fill:#E0F2FE,stroke:#0284c7,stroke-dasharray: 5 5,color:#000
+    style DB fill:#FFF7ED,stroke:#ea580c,color:#333
     
-    %% Explicitly style internal nodes to ensure visibility if they inherit default white text in dark mode
     style Op fill:#fff,stroke:#333,color:#333
     style Context fill:#fff,stroke:#333,color:#333
+    
+    %% Link Styling
+    linkStyle default stroke-width:2px,fill:none,stroke:#666
 ```
 
+  </div>
 </div>
+
 
 ---
 level: 2
@@ -324,29 +403,57 @@ level: 2
 
 # AI as a Function
 
-<div grid="~ cols-2 gap-16">
-<div>
+<div class="grid grid-cols-[1.2fr_0.8fr] gap-8 mt-4">
 
-Defining an AI interaction is like writing a function with natural language as the code:
+<!-- Left Column: The Code Comparison -->
+<div class="flex flex-col gap-4">
 
-<div class="mt-8">
+<div class="leading-snug">
+  Defining an AI interaction is like writing a function with natural language as the code:
+</div>
 
-```manul
-fn review(resume: Resume) -> ResumeReview {
-    return llm(
-        """
-        Review the following resume:
+<!-- Comparison Wrapper -->
+<div class="relative flex flex-col gap-2">
 
-        ${resume}
-        """
-    )
-}
+  <!-- 1. The Hard Way (Traditional) -->
+  <div class="transition duration-300">
+    <div class="text-[10px] font-bold text-gray-500 mb-1 uppercase tracking-wider">Traditional LLM Call</div>
+
+```ts {maxHeight:'120px'}
+const schemaStr = JSON.stringify(resumeReviewSchema, null, 2);
+
+const prompt = `
+  Review the following resume: ${resume}
+  
+  You must respond with valid JSON matching this schema:
+  ${schemaStr}
+`
+const response = await llm.generate(prompt);
+const result = JSON.parse(response.text); // Hope it's valid JSON
 ```
 
-</div>
+  </div>
+
+  <!-- Arrow -->
+  <div class="flex justify-center -my-2 z-10">
+    <carbon-arrow-down class="text-xl text-gray-400 bg-white dark:bg-[#121212] rounded-full p-0.5 border border-gray-500" />
+  </div>
+
+  <!-- 2. The Manul Way -->
+  <div class="border-l-4 border-blue-500 pl-4 bg-blue-500/5 py-2 rounded-r-lg">
+    <div class="text-[10px] font-bold text-blue-500 mb-1 uppercase tracking-wider">Manul Function</div>
+```manul
+fn review(resume: Resume) -> ResumeReview """
+    Review the following resume: ${resume}
+"""
+```
+  </div>
 
 </div>
-<div>
+</div>
+
+<!-- Right Column: The Architecture -->
+<div class="flex items-center justify-center h-full">
 
 ```mermaid
 graph TD
@@ -358,19 +465,22 @@ graph TD
     Model("<b>AI Model</b><br/>LLM Inference"):::infra
 
     %% Edges
-    User -- "1. Call with Object" --> Manul
-    Manul -- "2. Prompt + JSON Schema" --> Model
-    Model -- "3. Structured Data" --> Manul
-    Manul -- "4. Typed Result" --> User
+    User -- "1. Call" --> Manul
+    Manul -- "2. Prompt +<br/>JSON Schema" --> Model
+    Model -- "3. Structured<br/>JSON" --> Manul
+    Manul -- "4. Typed<br/>Object" --> User
 
     %% Styling to match theme
-    classDef app fill:#f9f9f9,stroke:#333,stroke-width:1px,font-size:14px,color:#333;
-    classDef magic fill:#3498db,stroke:#2980b9,color:#fff,font-weight:bold,font-size:14px;
-    classDef infra fill:#fff3e0,stroke:#e65100,font-size:14px,color:#333;
+    classDef app fill:#f9f9f9,stroke:#333,stroke-width:1px,font-size:13px,color:#333;
+    classDef magic fill:#3498db,stroke:#2980b9,color:#fff,font-weight:bold,font-size:13px;
+    classDef infra fill:#fff3e0,stroke:#e65100,font-size:13px,color:#333;
+    
+    linkStyle default stroke-width:2px,fill:none,stroke:#999,font-size:10px;
 ```
 
 </div>
 </div>
+
 
 ---
 
@@ -444,7 +554,7 @@ productApi.save({
 <div class="flex flex-col gap-6 mt-4">
     <!-- Intro Text -->
     <div class="text-center opacity-80 text-lg">
-        Manul creates a new category of <b>Cloud-Native Language</b>.<br>
+        Manul creates a new category of <b>Cloud Programming Language</b>.<br>
         The closest existing alternatives are Backend-as-a-Service platforms.
     </div>
     <!-- Main Comparison Grid -->
